@@ -119,7 +119,7 @@ A structured JSON knowledge base for **Techies Café** (New Giza, Egypt) coverin
 
 ## 👩‍💻 Author
 
-**Passant Shaaban Abd-Elazeem**  
+**Passant Shaaban**  
 Computer Science Student — Cairo University (Class of 2027)  
 [LinkedIn](https://www.linkedin.com/in/passantelsherif)
 
