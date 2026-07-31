@@ -1,0 +1,283 @@
+{
+  "cafe": {
+    "name": "Techies Caf\u00e9",
+    "tagline": "Where code meets coffee",
+    "contact": {
+      "phone": "01172635",
+      "email": "hello@techiescafe.eg",
+      "social_media": {
+        "instagram": "@techiescafe",
+        "facebook": "Techies Caf\u00e9 New Giza"
+      }
+    },
+    "location": {
+      "area": "New Giza",
+      "city": "6th of October City",
+      "governorate": "Giza",
+      "country": "Egypt",
+      "nearby_landmarks": [
+        "New Giza University",
+        "New Giza residential compounds"
+      ],
+      "parking": "Available on-site"
+    },
+    "hours": {
+      "sunday": "9:00 AM \u2013 12:00 AM",
+      "monday": "9:00 AM \u2013 12:00 AM",
+      "tuesday": "9:00 AM \u2013 12:00 AM",
+      "wednesday": "9:00 AM \u2013 12:00 AM",
+      "thursday": "9:00 AM \u2013 1:00 AM",
+      "friday": "10:00 AM \u2013 1:00 AM",
+      "saturday": "10:00 AM \u2013 1:00 AM"
+    },
+    "concept": {
+      "description": "Techies Caf\u00e9 is a tech-themed specialty caf\u00e9 designed for students, developers, freelancers, and remote workers. It blends a warm coffee-shop atmosphere with a productive co-working environment.",
+      "target_audience": [
+        "students",
+        "software engineers",
+        "designers",
+        "freelancers",
+        "startup teams",
+        "gamers"
+      ],
+      "ambience": "Modern industrial design with warm lighting, exposed brick, neon tech-inspired d\u00e9cor, and dedicated quiet and social zones."
+    },
+    "amenities": {
+      "wifi": {
+        "available": true,
+        "speed": "High-speed fiber (300 Mbps)",
+        "password_policy": "Provided with every order receipt"
+      },
+      "power_outlets": "At every seat",
+      "seating_capacity": 60,
+      "seating_types": [
+        "individual workstations",
+        "group tables",
+        "cozy lounge corners",
+        "outdoor terrace seats"
+      ],
+      "private_rooms": {
+        "available": true,
+        "details": "One bookable meeting/team room (up to 8 people) \u2014 reserve via phone or social media"
+      },
+      "monitors": "Available for rent at select workstation seats",
+      "printing": "Available upon request (B&W and color)",
+      "locker_storage": "Small lockers available for daily use"
+    },
+    "menu": {
+      "hot_drinks": [
+        {
+          "name": "Espresso",
+          "price_egp": 60
+        },
+        {
+          "name": "Americano",
+          "price_egp": 65
+        },
+        {
+          "name": "Cappuccino",
+          "price_egp": 75
+        },
+        {
+          "name": "Flat White",
+          "price_egp": 80
+        },
+        {
+          "name": "Latte",
+          "price_egp": 80
+        },
+        {
+          "name": "Mocha",
+          "price_egp": 85
+        },
+        {
+          "name": "Matcha Latte",
+          "price_egp": 90
+        },
+        {
+          "name": "Chai Latte",
+          "price_egp": 75
+        },
+        {
+          "name": "Hot Chocolate",
+          "price_egp": 75
+        },
+        {
+          "name": "V60 Pour-Over (single origin)",
+          "price_egp": 95
+        }
+      ],
+      "cold_drinks": [
+        {
+          "name": "Iced Latte",
+          "price_egp": 85
+        },
+        {
+          "name": "Cold Brew",
+          "price_egp": 90
+        },
+        {
+          "name": "Iced Matcha",
+          "price_egp": 95
+        },
+        {
+          "name": "Iced Mocha",
+          "price_egp": 90
+        },
+        {
+          "name": "Nitro Cold Brew",
+          "price_egp": 100
+        },
+        {
+          "name": "Lemonade (classic / mint)",
+          "price_egp": 65
+        },
+        {
+          "name": "Fresh Juice (orange / mango / watermelon)",
+          "price_egp": 70
+        }
+      ],
+      "food": [
+        {
+          "name": "Avocado Toast",
+          "price_egp": 120
+        },
+        {
+          "name": "Smashed Egg & Cheese Croissant",
+          "price_egp": 110
+        },
+        {
+          "name": "Chicken Pesto Panini",
+          "price_egp": 130
+        },
+        {
+          "name": "Tuna Melt Sandwich",
+          "price_egp": 115
+        },
+        {
+          "name": "Overnight Oats Bowl",
+          "price_egp": 100
+        },
+        {
+          "name": "Granola Yogurt Parfait",
+          "price_egp": 90
+        },
+        {
+          "name": "Loaded Nachos",
+          "price_egp": 140
+        },
+        {
+          "name": "Caesar Salad",
+          "price_egp": 120
+        },
+        {
+          "name": "Brownie",
+          "price_egp": 65
+        },
+        {
+          "name": "Cheesecake Slice",
+          "price_egp": 80
+        },
+        {
+          "name": "Croissant (plain / almond)",
+          "price_egp": 55
+        }
+      ],
+      "dietary_options": [
+        "vegan alternatives available",
+        "oat / almond milk options",
+        "gluten-free bread on request"
+      ],
+      "signature_drinks": [
+        {
+          "name": "Debug Brew",
+          "description": "Triple-shot cold brew with salted caramel foam",
+          "price_egp": 110
+        },
+        {
+          "name": "404 Not Found (Lemonade)",
+          "description": "Sparkling lemonade infused with blue butterfly pea flower \u2014 color changes when you stir",
+          "price_egp": 85
+        },
+        {
+          "name": "Git Push Latte",
+          "description": "Brown butter latte with cinnamon dust",
+          "price_egp": 95
+        }
+      ]
+    },
+    "services": {
+      "coworking": {
+        "day_pass": {
+          "price_egp": 150,
+          "includes": [
+            "unlimited wifi",
+            "one hot drink",
+            "power access",
+            "locker"
+          ]
+        },
+        "monthly_membership": {
+          "price_egp": 1500,
+          "includes": [
+            "unlimited access during opening hours",
+            "two free drinks per day",
+            "private room booking (2 hrs/month)",
+            "printing credits"
+          ]
+        }
+      },
+      "events": {
+        "available": true,
+        "types": [
+          "tech meetups",
+          "hackathons",
+          "coding bootcamps",
+          "product demo nights",
+          "networking evenings"
+        ],
+        "booking": "Contact via phone or social media to inquire about event hosting"
+      },
+      "takeaway": true,
+      "delivery": {
+        "available": true,
+        "platforms": [
+          "Talabat",
+          "Elmenus"
+        ]
+      }
+    },
+    "policies": {
+      "minimum_order": "One item per person to occupy a seat",
+      "reservations": "Accepted for groups of 5+ and private room bookings",
+      "pets": "Not allowed indoors; welcome on outdoor terrace",
+      "noise_policy": "Quiet zone available for focused work; headphones encouraged in social zone after 8 PM"
+    },
+    "faqs": [
+      {
+        "q": "Do you have fast Wi-Fi?",
+        "a": "Yes \u2014 300 Mbps fiber, password provided with your order."
+      },
+      {
+        "q": "Can I hold a team meeting or workshop here?",
+        "a": "Absolutely. Book our private room (up to 8 people) via phone at 01172635."
+      },
+      {
+        "q": "Do you serve food all day?",
+        "a": "Yes, our full food menu is available during all opening hours."
+      },
+      {
+        "q": "Is there parking?",
+        "a": "Yes, on-site parking is available."
+      },
+      {
+        "q": "Do you have vegan or dairy-free options?",
+        "a": "Yes \u2014 oat and almond milk are available, and several menu items are vegan-friendly."
+      },
+      {
+        "q": "How do I order on delivery apps?",
+        "a": "Search 'Techies Caf\u00e9' on Talabat or Elmenus."
+      }
+    ]
+  }
+}
