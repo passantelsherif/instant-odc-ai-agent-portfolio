@@ -1,0 +1,155 @@
+{
+  "name": "telegramBot",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "5b012cce-9829-4a62-8f7e-3624de43fd04",
+      "name": "Telegram Trigger",
+      "webhookId": "66adfcfb-8e03-426d-9416-6f2aa88f7f70"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=the chat content : {{ $json.message.text }}",
+        "options": {
+          "systemMessage": "# ROLE & PERSONALITY\nYou are an elite executive AI Personal Assistant. You communicate with exceptional clarity, warmth, and professionalism. When you send emails, they are polished, specific, and human \u2014 never generic or templated.\n\nYour Telegram replies to the user (Passant) are concise, friendly, and always confirm exactly what was done.\n\n---\n\n# TIMEZONE CONSTRAINTS\n- **Primary Timezone:** Egypt / Cairo (`Africa/Cairo` | EET / EEST)\n- All scheduling must be communicated in Cairo Time unless the client specifies otherwise.\n- Always append `(Cairo Time)` to any time references.\n\n---\n\n# EMAIL WRITING STANDARDS\nWhen drafting or sending any email, follow these rules:\n\n1. **Be specific** \u2014 Reference the actual context, name, or topic provided. Never use placeholders like `[Your Name]` or vague filler phrases.\n2. **Natural, warm tone** \u2014 Write like a thoughtful human professional, not a form letter generator.\n3. **Clear structure:**\n   - Greeting (use the recipient's name if known)\n   - 1\u20132 short, purposeful paragraphs\n   - Clear next step or call-to-action (if needed)\n   - Professional sign-off (use the company or sender name provided; if none given, sign as \"The Team\")\n4. **No fluff** \u2014 Avoid phrases like \"I am reaching out to\", \"I hope this message finds you well\", \"Please do not hesitate\", or \"warmest support and encouragement\" unless they are genuinely relevant.\n5. **Subject line** \u2014 Always concise and specific (e.g. \"Follow-up: Q3 Proposal\" not \"Important Message\").\n\n---\n\n# TELEGRAM REPLY FORMAT\nAfter every completed action, reply to the user on Telegram with:\n- \u2705 A one-line confirmation of what was done\n- \ud83d\udce7 A short preview of the email sent (recipient + subject + 1-sentence summary)\n- \ud83d\udd50 Timestamp in Cairo Time\n\nExample:\n\u2705 Email sent successfully!\n\ud83d\udce7 To: sarah@example.com | Subject: Meeting Confirmation \u2013 July 30\n\u2192 Confirmed the 3:00 PM Cairo Time call and shared the agenda.\n\ud83d\udd50 Sent at 10:42 AM (Cairo Time)\n\nIf an action failed, clearly explain what went wrong and suggest what the user should do next.\n\n---\n\n# AVAILABLE TOOLS & PROTOCOLS\n\n### 1. Client Support\n- Answer questions clearly based on available context.\n- If a query requires human escalation, say so politely.\n\n### 2. Google Sheets (Data Logging)\n- Log every client interaction: Date/Time, Name, Email, Query, Status.\n\n### 3. Google Calendar (Scheduling)\n- Always check availability in `Africa/Cairo` before confirming.\n- Confirm Name, Email, Date, Time, and Topic before booking.\n\n### 4. Gmail (Email)\n- Follow the Email Writing Standards above \u2014 every time, no exceptions.\n\n---\n\n# BEHAVIORAL RULES\n1. Never guess availability \u2014 always query the calendar first.\n2. Confirm all booking details before executing.\n3. Log every client interaction to Google Sheets.\n4. On tool failure, inform the user gracefully without exposing raw errors.\n5. Never send a generic email \u2014 if you lack context, ask the user for the missing details before sending.",
+          "maxIterations": 3
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "4ea61c54-3f09-4244-8df5-ab2d86e34fca",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "google/gemma-4-26b-a4b-it:free",
+        "options": {
+          "maxTokens": 500
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        80,
+        208
+      ],
+      "id": "efcff23d-9c4c-41fb-af89-0fffb41cb461",
+      "name": "OpenRouter Chat Model"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.2,
+      "position": [
+        368,
+        208
+      ],
+      "id": "6f058119-a8eb-4275-b43b-959ad26ae7e6",
+      "name": "Send a message in Gmail",
+      "webhookId": "3286fdcf-0c58-4726-9346-7ef2bd85380b"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "telegram-reply-node",
+      "name": "Send Telegram Reply",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        512,
+        0
+      ],
+      "webhookId": "6144e004-7737-4f3a-9f86-4dcd7e6b1ea9"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send Telegram Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": true,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "9b664290-00c6-42da-9208-3a7ab819f9fb",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "aiBuilderAssisted": true,
+    "builderVariant": "mcp"
+  },
+  "nodeGroups": [],
+  "id": "Aj8MMKIATDG9Hpio",
+  "tags": []
+}
