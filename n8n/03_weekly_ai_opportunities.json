@@ -1,0 +1,313 @@
+{
+  "name": "Weekly AI Opportunities Digest v2",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                1
+              ],
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "id": "dd9b9442-9745-479d-8876-9094cf8c99f3",
+      "name": "Every Monday 8AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const queries = [\n  // Internships\n  { q: 'AI Engineering Internship Cairo Egypt 2026', category: 'internship' },\n  { q: 'Machine Learning Internship Egypt 2026 apply', category: 'internship' },\n  { q: 'Computer Vision Internship Egypt 2026', category: 'internship' },\n  { q: 'Generative AI Internship Egypt 2026', category: 'internship' },\n  { q: 'Data Science Internship Cairo Egypt 2026', category: 'internship' },\n  { q: 'Remote AI internship 2026 open applications', category: 'internship' },\n  { q: 'site:linkedin.com/jobs AI ML internship Egypt 2026', category: 'internship' },\n  // Training programs\n  { q: 'DEPI digital egypt pioneers initiative 2026 AI track apply', category: 'training' },\n  { q: 'ITI summer training 2026 AI machine learning Egypt', category: 'training' },\n  { q: 'NTI training program 2026 Egypt artificial intelligence', category: 'training' },\n  { q: 'Orange Digital Center AI bootcamp Egypt 2026', category: 'training' },\n  { q: 'AI summer training program Egypt university students 2026', category: 'training' },\n  // Hackathons\n  { q: 'AI hackathon Egypt 2026 registration open', category: 'hackathon' },\n  { q: 'global AI hackathon online 2026 open to all countries', category: 'hackathon' },\n  { q: 'Kaggle competition 2026 active AI machine learning', category: 'hackathon' },\n  { q: 'student innovation challenge AI competition 2026 apply', category: 'hackathon' },\n  { q: 'Arab region AI competition hackathon 2026', category: 'hackathon' }\n];\nreturn queries.map(q => ({ json: q }));"
+      },
+      "id": "21ff4943-2376-4959-a3d6-16346142defe",
+      "name": "Build Search Queries",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "results",
+        "options": {}
+      },
+      "id": "fe83a8ee-2eeb-4eb6-8569-5065ea3c705b",
+      "name": "Aggregate All Results",
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        672,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Generate a clean responsive HTML email for Passant. Output ONLY valid HTML starting with <!DOCTYPE html>. No commentary, no markdown.\n\nInternships ({{ $json.internships.length }}): {{ JSON.stringify($json.internships) }}\nTraining ({{ $json.training.length }}): {{ JSON.stringify($json.training) }}\nHackathons ({{ $json.hackathons.length }}): {{ JSON.stringify($json.hackathons) }}\n\nStructure:\n- Header: #1a237e background, white text, title 'Weekly AI Opportunities Digest', today date\n- Section 1 '\ud83d\ude80 AI & Software Internships': internships\n- Section 2 '\ud83d\udcda Training Programs & Bootcamps': training\n- Section 3 '\ud83c\udfc6 Hackathons & Competitions': hackathons\n- Empty section: 'No opportunities found this week.'\n- Each card: white background, bold title as hyperlink, source, snippet, 'Apply Now' button (#1a237e)\n- Footer: 'Apply before deadlines and register early for limited-seat programs!'\nStart with <!DOCTYPE html>.",
+        "options": {
+          "systemMessage": "You are an HTML email formatter. Your ONLY job is to output raw valid HTML \u2014 nothing else.\n\nSTRICT RULES:\n- Output ONLY the HTML string. Start with <!DOCTYPE html> or <html>.\n- NEVER output any thinking, reasoning, commentary, or explanation.\n- NEVER use markdown or code fences.\n- NEVER write phrases like 'Wait', 'Let me', 'I need to', 'Reading includes', 'Let's continue', 'The next', or any inner monologue.\n- If you are unsure about something, still output only HTML \u2014 no commentary.\n- Your entire response must be valid HTML that can be directly injected into an email."
+        }
+      },
+      "id": "79b8c59d-e5e8-40e9-ab36-4775b5e30ff7",
+      "name": "Build HTML Email",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        896,
+        0
+      ],
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "model": "cohere/north-mini-code:free",
+        "options": {}
+      },
+      "id": "bb585ed4-48f9-4f23-9b94-cc02b2329eec",
+      "name": "OpenRouter Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        976,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "passantshaaban1@gmail.com",
+        "subject": "=Weekly AI Opportunities Digest - {{ $now.toFormat(\"MMMM d, yyyy\") }}",
+        "message": "={{ $json.output }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "78ef3498-f90d-4540-bf10-49219df5f144",
+      "name": "Send Weekly Digest",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1408,
+        80
+      ],
+      "executeOnce": true,
+      "webhookId": "9882ee91-b1a3-4591-819f-0471ab7009f9"
+    },
+    {
+      "parameters": {
+        "url": "https://serpapi.com/search",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "serpApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "={{ $json.q }}"
+            },
+            {
+              "name": "num",
+              "value": "5"
+            },
+            {
+              "name": "hl",
+              "value": "en"
+            },
+            {
+              "name": "gl",
+              "value": "eg"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "775e81ae-06a8-4878-832b-7fae1153a5e0",
+      "name": "SerpAPI Search",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        672,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst output = [];\n\nconst closedKeywords = [\n  'closed', 'expired', 'deadline passed', 'no longer accepting', 'position filled',\n  'applications closed', 'ended', 'over', 'not accepting', 'fully booked'\n];\n\nfor (const item of items) {\n  const category = item.json.category || 'internship';\n  const results = item.json.organic_results || [];\n  for (const r of results.slice(0, 5)) {\n    const text = ((r.title || '') + ' ' + (r.snippet || '')).toLowerCase();\n    const isClosed = closedKeywords.some(k => text.includes(k));\n    if (isClosed) continue;\n    output.push({\n      json: {\n        category,\n        title: r.title || '',\n        link: r.link || '',\n        snippet: r.snippet || '',\n        source: r.source || ''\n      }\n    });\n  }\n}\n\nreturn output;"
+      },
+      "id": "cadf0bb7-7c70-46f7-9a2b-7ce35f7fcfad",
+      "name": "Tag & Extract Results",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        960,
+        416
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "790d109a-a545-4a81-877b-f7c9babbd535",
+      "name": "Query Loop",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        448,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $input.first().json.results || [];\n\nconst closedKeywords = ['closed','expired','deadline passed','no longer accepting','position filled','applications closed','not accepting','fully booked'];\n\nconst seenTitles = new Set();\nconst seenLinks = new Set();\nconst cleaned = { internship: [], training: [], hackathon: [] };\nconst caps = { internship: 10, training: 5, hackathon: 5 };\n\nfor (const item of raw) {\n  const cat = item.category || 'internship';\n  if (!cleaned[cat]) continue;\n  if (cleaned[cat].length >= caps[cat]) continue;\n\n  const titleNorm = (item.title || '').toLowerCase().trim();\n  const link = (item.link || '').trim();\n  if (seenTitles.has(titleNorm) || seenLinks.has(link)) continue;\n\n  const text = titleNorm + ' ' + (item.snippet || '').toLowerCase();\n  if (closedKeywords.some(k => text.includes(k))) continue;\n\n  seenTitles.add(titleNorm);\n  if (link) seenLinks.add(link);\n\n  cleaned[cat].push({\n    title: item.title || '',\n    link,\n    snippet: (item.snippet || '').slice(0, 120),\n    source: item.source || ''\n  });\n}\n\nreturn [{ json: { internships: cleaned.internship, training: cleaned.training, hackathons: cleaned.hackathon } }];"
+      },
+      "id": "b1cfe98e-2224-4937-af17-1a4455a89db4",
+      "name": "Clean & Deduplicate",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        112
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Every Monday 8AM": {
+      "main": [
+        [
+          {
+            "node": "Build Search Queries",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Search Queries": {
+      "main": [
+        [
+          {
+            "node": "Query Loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build HTML Email": {
+      "main": [
+        [
+          {
+            "node": "Send Weekly Digest",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Build HTML Email",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SerpAPI Search": {
+      "main": [
+        [
+          {
+            "node": "Tag & Extract Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tag & Extract Results": {
+      "main": [
+        [
+          {
+            "node": "Query Loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query Loop": {
+      "main": [
+        [
+          {
+            "node": "Aggregate All Results",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "SerpAPI Search",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate All Results": {
+      "main": [
+        [
+          {
+            "node": "Clean & Deduplicate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clean & Deduplicate": {
+      "main": [
+        [
+          {
+            "node": "Build HTML Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": true
+  },
+  "versionId": "02a3690f-fb49-4a4e-b4ba-a4b6fd70d756",
+  "meta": {
+    "aiBuilderAssisted": true,
+    "builderVariant": "mcp"
+  },
+  "nodeGroups": [],
+  "id": "sMVrJbbqZVMuIWVn",
+  "tags": []
+}
